@@ -3,6 +3,7 @@ import { useTodo } from '../contexts/TodoContext';
 
 function TodoForm() {
     const [todo, setTodo] = useState("")
+    const [text, setText] = useState('Add')
     const {addTodo} = useTodo()
 
     const add = (e) => {
@@ -14,6 +15,13 @@ function TodoForm() {
         setTodo("")
     }
 
+    const handleClick = () => {
+        setText("Added")
+        setTimeout(() => {
+            setText("Add")
+        }, 500);
+    }
+
     return (
         <form onSubmit={add} className="flex">
             <input
@@ -23,9 +31,10 @@ function TodoForm() {
                 onChange={(e) => setTodo(e.target.value)}
                 className="w-full border border-black/10 rounded-l-lg px-3 outline-none duration-150 bg-white/20 py-1.5"
             />
-            <button type="submit" className="rounded-r-lg px-3 py-1 bg-green-600 text-white shrink-0"
-            disabled = { todo ? false : true}>
-                Add
+            <button type="submit" className={`rounded-r-lg px-3 py-1 ${text == "Add" ? "bg-green-600" : "bg-white && text-green-600"} text-white shrink-0`}
+            disabled = { todo ? false : true}
+            onClick={handleClick}>
+                {text}
             </button>
         </form> 
     );
